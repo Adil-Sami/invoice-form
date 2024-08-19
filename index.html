@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Form</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+</head>
+
+<body>
+
+    <div class="container my-5">
+        <div class="form">
+
+            <div class="fields">
+                <div class="row mb-4">
+                    <div class="col-lg-6">
+                        <label class="form-label" for="customer">Customer <span class="text-danger">*</span></label>
+                        <select name="customer" class="form-control" data-select="true" id="customer" required>
+                            <option value="1">Adnan</option>
+                            <option value="2">Ali</option>
+                            <option value="3">Asad</option>
+                            <option value="4">Ahmad</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label class="form-label" for="invoice_id">Invoice #</label>
+                        <input type="text" value="6RWMFB" class="form-control" required readonly name="invoice_id"
+                            id="invoice_id">
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+
+                    <div class="col-lg-6">
+                        <label class="form-label" for="invoice_date">Invoice Date <span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="invoice_date" id="invoice_date" required>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <label class="form-label" for="due_date">Due Date <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="due_date" id="due_date">
+                    </div>
+
+                </div>
+
+                <div class="row mb-4">
+
+                    <div class="col-lg-6">
+                        <label class="form-label" for="status">Status <span class="text-danger">*</span></label>
+                        <select name="status" data-select="true" class="form-control" id="status">
+                            <option value="0">Unpaid</option>
+                            <option value="1">Paid</option>
+                            <option value="2">Partially Paid</option>
+                            <option value="3">Overdue</option>
+                            <option value="4">Proccessing</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" name="is_recurring" id="is_recurring">
+                            <label style="cursor: pointer; user-select: none;" class="form-check-label"
+                                for="is_recurring">Recurring</label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row mb-4">
+
+                    <div class="col-lg-6">
+                        <label class="form-label" for="project_name">Project Name</label>
+                        <input type="text" name="project_name" id="project_name" class="form-control">
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div style="display: none;" id="recurring_cycle_wrapper">
+                            <label for="recurring_cycle">Recurring Cycle</label>
+                            <input class="form-control" type="number" name="recurring_cycle" id="recurring_cycle">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="products">
+                <button id="add-new-item" class="float-right btn btn-primary">Add New</button>
+                <div class="table-responsive">
+                    <table class="table table-striped box-shadow-none mt-4">
+                        <thead>
+                            <tr class="border-bottom fs-7 fw-bolder text-gray-700 text-uppercase">
+                                <th style="font-size: 14px;" scope="col">#</th>
+                                <th style="font-size: 14px;" scope="col" class="required">Product</th>
+                                <th style="font-size: 14px;" scope="col" class="required">Qty</th>
+                                <th style="font-size: 14px;" scope="col" class="required">Unit Price</th>
+                                <th style="font-size: 14px;" scope="col">Tax</th>
+                                <th style="font-size: 14px;" scope="col" class="required">Amount</th>
+                                <th style="font-size: 14px;" scope="col" class="required">Po Number</th>
+                                <th style="font-size: 14px;" scope="col" class="required">Job Number</th>
+                                <th style="font-size: 14px;" scope="col" class="text-end">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice-item-container">
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="total">
+                <div class="row">
+                    <div class="col-lg-7 col-sm-12 mt-2 mt-lg-0 align-right-for-full-screen">
+                        <div class="mb-2 col-4 float-right">
+                            <div class="mb-4">
+                                <label for="discount" class="form-label mb-1">Discount:</label>
+                                <div class="input-group">
+                                    <input id="discount" class="form-control mb-2"
+                                        oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                                        min="0" value="0" step=".01" pattern="^\d*(\.\d{0,2})?$" name="discount"
+                                        type="number" disabled="disabled">
+                                    <div class="input-group-append" style="width: 210px !important;">
+                                        <select class="form-control" data-select="" id="discountType"
+                                            name="discount_type">
+                                            <option value="0" selected="selected">Select Discount Type</option>
+                                            <option value="1">Fixed</option>
+                                            <option value="2">Percentage</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="tax2" class="form-label mb-1">Tax:</label>
+                                <select name="taxes[]" data-select="" class="form-control">
+                                    <option value="">Select Tax</option>
+                                    <option value="1" data-tax="8.63">New York state sales tax
+                                    </option>
+                                    <option value="2" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="4" data-tax="9.95">Guymon, OK
+                                    </option>
+                                    <option value="5" data-tax="9.75">Junction City. KS
+                                    </option>
+                                    <option value="6" data-tax="8.25">Hitchcock, TX
+                                    </option>
+                                    <option value="9" data-tax="7">Miami
+                                    </option>
+                                    <option value="10" data-tax="10.83">Magnolia, AR
+                                    </option>
+                                    <option value="12" data-tax="8.25">Mckinney, TX
+                                    </option>
+                                    <option value="13" data-tax="8.25">Grand Prairie, TX
+                                    </option>
+                                    <option value="14" data-tax="6.35">Groton, CT
+                                    </option>
+                                    <option value="16" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="17" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="18" data-tax="9.75">Junction City. KS
+                                    </option>
+                                    <option value="19" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="20" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="21" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="22" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="23" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="24" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="25" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="26" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="27" data-tax="7">Elkhardt Indiana Tax
+                                    </option>
+                                    <option value="28" data-tax="10.83">Magnolia, AR
+                                    </option>
+                                    <option value="29" data-tax="10.83">Magnolia, AR
+                                    </option>
+                                    <option value="30" data-tax="11.25">Hays, KS
+                                    </option>
+                                    <option value="31" data-tax="10.25">Chicago, IL
+                                    </option>
+                                    <option value="32" data-tax="8.25">Grand Prairie, TX
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-xxl-3 col-lg-5 col-md-6 ms-md-auto mt-4 mb-lg-10 mb-6">
+                        <div class="border-top">
+                            <table class="table table-borderless box-shadow-none mb-0 mt-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="ps-0">Sub Total:</td>
+                                        <td class="text-gray-900 text-end pe-0">
+                                            <span>$</span>
+                                            <span id="total" class="price">0.00</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0">Discount:</td>
+                                        <td class="text-gray-900 text-end pe-0">
+                                            <span>$</span>
+                                            <span id="discountAmount">0.00</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0">Tax:</td>
+                                        <td class="text-gray-900 text-end pe-0">
+                                            <span>$</span>
+                                            <span id="totalTax">0.00</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="ps-0">Total:</td>
+                                        <td class="text-gray-900 text-end pe-0">
+                                            <span>$</span>
+                                            <span id="finalAmount">0.00</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("select[data-select]").select2()
+
+            $("#is_recurring").change(function () {
+                $("#recurring_cycle_wrapper").toggle(this.checked);
+            });
+
+            $("select[name='discount_type']").change(function() {
+                if ($(this).val() == 1 || $(this).val() == 2) {
+                    $("#discount").prop("disabled", false); 
+                }else{
+                    $("#discount").prop("disabled", true); 
+                }
+            });
+
+            let templateString = `
+                            <td class="text-center item-number align-center">1</td>
+                            <td  class="table__item-desc w-25">
+                                <select style="max-width:250px" class="form-control" data-select="" required="" name="product_id[]" tabindex="-1"
+                                    aria-hidden="true">
+                                    <option selected="selected" value="">Select Product or Enter free text</option>
+                                    <option value="20">Dumpster-10yd-068</option>
+                                    <option value="23">Dumpster-10yd-271</option>
+                                    <option value="71">Dumpster-12yd-1724011958-617</option>
+                                    <option value="17">Dumpster-15yd-192</option>
+                                    <option value="18">Dumpster-18yd-192</option>
+                                    <option value="21">Dumpster-20yd-068</option>
+                                    <option value="19">Dumpster-20yd-192</option>
+                                    <option value="50">Dumpster-25yd-1711933003-8468</option>
+                                    <option value="22">Dumpster-30yd-068</option>
+                                    <option value="35">Dumpster-30yd-1711370877-8844</option>
+                                    <option value="62">Dumpster-30yd-1716183798-4166</option>
+                                    <option value="63">Dumpster-30yd-1716184502-4857</option>
+                                    <option value="24">Dumpster-30yd-271</option>
+                                    <option value="69">Dumpster-3yd-1723665505-7884</option>
+                                    <option value="73">Dumpster-3yd-1724012350-9296</option>
+                                    <option value="70">Temporary Toilets-Flushable Toilet with Sink-1723997770-2729
+                                    </option>
+                                    <option value="72">Temporary Toilets-Flushable Toilet with Sink-1724012309-2885
+                                    </option>
+                                    <option value="66">testing 3 34</option>
+                                </select>
+                            </td>
+                            <td class="table__qty">
+                                <input class="form-control qty form-control-solid" required="" type="number" min="0"
+                                    step=".01"
+                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                                    name="quantity[]">
+                            </td>
+                            <td>
+                                <input class="form-control price-input price form-control-solid"
+                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                                    min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required=""
+                                    onkeypress="if (!window.__cfRLUnblockHandlers) return false; if(this.value.length==8) return false;"
+                                    name="price[]" type="number">
+                            </td>
+                            <td>
+                                <select style="width:180px" data-select=""  name="tax[]"
+                                    class="form-control"
+                                    tabindex="-1" aria-hidden="true">
+                                    <option value="0">Select Tax</option>
+                                    <option value="8.63" data-id="1">New York state sales tax</option>
+                                    <option value="7" data-id="2">Elkhardt Indiana Tax</option>
+                                    <option value="9.95" data-id="4">Guymon, OK</option>
+                                    <option value="9.75" data-id="5">Junction City. KS</option>
+                                    <option value="8.25" data-id="6">Hitchcock, TX</option>
+                                    <option value="7" data-id="9">Miami</option>
+                                    <option value="10.83" data-id="10">Magnolia, AR</option>
+                                    <option value="8.25" data-id="12">Mckinney, TX</option>
+                                    <option value="8.25" data-id="13">Grand Prairie, TX</option>
+                                    <option value="6.35" data-id="14">Groton, CT</option>
+                                    <option value="7" data-id="16">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="17">Elkhardt Indiana Tax</option>
+                                    <option value="9.75" data-id="18">Junction City. KS</option>
+                                    <option value="7" data-id="19">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="20">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="21">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="22">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="23">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="24">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="25">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="26">Elkhardt Indiana Tax</option>
+                                    <option value="7" data-id="27">Elkhardt Indiana Tax</option>
+                                    <option value="10.83" data-id="28">Magnolia, AR</option>
+                                    <option value="10.83" data-id="29">Magnolia, AR</option>
+                                    <option value="11.25" data-id="30">Hays, KS</option>
+                                    <option value="10.25" data-id="31">Chicago, IL</option>
+                                    <option value="8.25" data-id="32">Grand Prairie, TX</option>
+                                </select>
+                            </td>
+                            <td class="text-end item-total pt-8 text-nowrap">
+                                <span>$</span>
+                                0.00
+                            </td>
+                            <td>
+                                <input class="form-control job_number-input form-control-solid"
+                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                                    min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="job_number[]"
+                                    type="number">
+                            </td>
+                            <td>
+                                <input class="form-control po_number  form-control-solid"
+                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                                    min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="po_number[]"
+                                    type="number">
+                            </td>
+                            <td class="text-end">
+                                <button type="button" title="Delete"
+                                    class="btn btn-icon fs-3 text-danger btn-active-color-danger delete-item-new">
+                                    <i style="pointer-events:none" class="fa-solid fa-trash"></i>
+                                </button>
+                            </td>
+                        `
+            const taxTr = document.createElement("tr")
+            taxTr.classList.add("tax-tr")
+            taxTr.innerHTML = templateString
+            const itemContainer = document.querySelector(".invoice-item-container");
+            itemContainer.appendChild(taxTr)
+
+            const deleteBtns = document.querySelectorAll(".delete-item-new")
+            deleteBtns.forEach(btn => {
+                btn.addEventListener("click", e => {
+                    e.target.parentElement.parentElement.remove()
+                })
+            })
+
+            $(".products select[data-select]").select2()
+
+            const addNewBtn = document.querySelector("#add-new-item")
+            addNewBtn.addEventListener("click", e => {
+                const newEl = document.createElement("tr")
+                newEl.classList.add("tax-tr")
+                newEl.innerHTML = templateString
+                itemContainer.appendChild(newEl)
+
+                const newDeleteBtn = document.querySelectorAll(".delete-item-new")
+                newDeleteBtn[newDeleteBtn.length - 1].addEventListener("click", e => {
+                    e.target.parentElement.parentElement.remove()
+                })
+
+                var last = $(".products select[data-select]")[$(".products select[data-select]").length - 1]
+                var secondlast = $(".products select[data-select]")[$(".products select[data-select]").length - 2]
+                $(last).select2()
+                $(secondlast).select2()
+
+            })
+
+
+        });
+    </script>
+
+</body>
+
+</html>
