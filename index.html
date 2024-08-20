@@ -140,7 +140,7 @@
 
                             <div>
                                 <label for="tax2" class="form-label mb-1">Tax:</label>
-                                <select name="taxes[]" data-select="" class="form-control">
+                                <select id="taxes" name="taxes[]" data-select="" class="form-control">
                                     <option value="">Select Tax</option>
                                     <option value="1" data-tax="8.63">New York state sales tax
                                     </option>
@@ -207,30 +207,22 @@
                                 <tbody>
                                     <tr>
                                         <td class="ps-0">Sub Total:</td>
-                                        <td class="text-gray-900 text-end pe-0">
-                                            <span>$</span>
-                                            <span id="total" class="price">0.00</span>
+                                        <td id="subtotalAmount" class="text-gray-900 text-end pe-0">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="ps-0">Discount:</td>
-                                        <td class="text-gray-900 text-end pe-0">
-                                            <span>$</span>
-                                            <span id="discountAmount">0.00</span>
+                                        <td id="discountAmount" class="text-gray-900 text-end pe-0">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="ps-0">Tax:</td>
-                                        <td class="text-gray-900 text-end pe-0">
-                                            <span>$</span>
-                                            <span id="totalTax">0.00</span>
+                                        <td id="taxAmount" class="text-gray-900 text-end pe-0">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="ps-0">Total:</td>
-                                        <td class="text-gray-900 text-end pe-0">
-                                            <span>$</span>
-                                            <span id="finalAmount">0.00</span>
+                                        <td id="finalAmount" class="text-gray-900 text-end pe-0">
                                         </td>
                                     </tr>
                                 </tbody>
@@ -315,7 +307,6 @@
             </select>
         </td>
         <td class="text-end item-total pt-8 text-nowrap">
-            0.00
         </td>
         <td>
             <input class="form-control job_number-input form-control-solid"
@@ -342,7 +333,6 @@
 
     <script>
         $(document).ready(function () {
-
             const currencySymbol = "$"
             const currencySymbolAfter = false
 
@@ -355,12 +345,24 @@
                 $("#recurring_cycle_wrapper").toggle(this.checked);
             });
 
+            $("#discount").on('input', function(){
+                calculateTotals()
+            })
+
+            $("#taxes").change(function () {
+                calculateTotals()
+            })
+
             $("select[name='discount_type']").change(function () {
                 if ($(this).val() == 1 || $(this).val() == 2) {
                     $("#discount").prop("disabled", false);
+                    $("#discount").val(0);
                 } else {
                     $("#discount").prop("disabled", true);
+                    $("#discount").val(0);
                 }
+
+                calculateTotals()
             });
 
             let templateString = document.querySelector("#product-item-template").innerHTML
@@ -368,6 +370,8 @@
             const itemContainer = document.querySelector(".invoice-item-container");
 
             addNewTrElement(templateString)
+
+            calculateTotals()
 
             const deleteBtns = document.querySelectorAll(".delete-item-new")
             deleteBtns.forEach(btn => {
@@ -406,32 +410,38 @@
                 let item = $(this).parent().parent()
                 item.find('.qty').val(1)
                 item.find('.price-input').val(0)
+
+                calculateTotals()
             }
 
             function handleQtyInput() {
                 let item = $(this).parent().parent()
                 let price = Number(item.find('.price-input').val())
                 let quantity = $(this).val()
-                let amount = (quantity * price).toFixed(2)
-                setItemAmount(item, amount)
+                let amount = quantity * price
+                setTotal(item.find('.item-total'), amount)
+
+                calculateTotals()
             }
 
             function handlePriceInput() {
                 let item = $(this).parent().parent()
                 let price = Number($(this).val())
                 let quantity = Number(item.find('.qty').val())
-                let amount = (quantity * price).toFixed(2)
-                setItemAmount(item, amount)
+                let amount = quantity * price
+                setTotal(item.find('.item-total'), amount)
+
+                calculateTotals()
             }
 
-            function setItemAmount(item, amount) {
+            function setTotal(element, amount) {
                 if (currencySymbolAfter) {
-                    amount = `${amount}${currencySymbol}`
+                    amount = `${amount.toFixed(2)} ${currencySymbol}`
                 } else {
-                    amount = `${currencySymbol}${amount}`
+                    amount = `${currencySymbol} ${amount.toFixed(2)}`
                 }
 
-                item.find('.item-total').text(amount)
+                $(element).text(amount)
             }
 
             function handleItemTaxChange() {
@@ -443,16 +453,59 @@
 
                 let amount = quantity * price
                 let itemTax = amount * (taxPercent / 100)
-                console.log(itemTax)
+                calculateTotals()
             }
 
             function calculateTotals() {
+                let subtotalAmount = 0
+                let taxAmount = 0
+                let finalAmount = 0
+                let discountAmount = 0
 
+                $(".tax-tr").each(function () {
+                    let item = $(this)
+                    let quantity = Number(item.find(".qty").val())
+                    let price = Number(item.find(".price-input").val())
+                    let amount = quantity * price
+                    subtotalAmount += amount
+
+                    let taxPercent = Number(item.find('.tax-select').val())
+                    let itemTax = amount * (taxPercent / 100)
+                    taxAmount += itemTax
+
+                })
+
+                let tax = $("#taxes option:selected").data('tax')
+                if (tax != undefined) {
+                    tax = Number(tax)
+                    taxAmount += subtotalAmount * (tax / 100)
+                }
+
+                let discount =  Number($("#discount").val())
+                let discountType =  Number($("#discountType").val())
+
+                // Discount type = fixed
+                if (discountType === 1) {
+                    discountAmount = discount                                        
+                }
+
+                // Discount type = percentage
+                if (discountType === 2) {
+                    discountAmount = (subtotalAmount + taxAmount) * (discount / 100)
+                }
+
+                finalAmount = taxAmount + subtotalAmount - discountAmount
+
+                setTotal($("#subtotalAmount"), subtotalAmount)
+                setTotal($("#taxAmount"), taxAmount)
+                setTotal($("#discountAmount"), discountAmount)
+                setTotal($("#finalAmount"), finalAmount)
             }
 
             function setupDeleteButtonEventListerners(button) {
                 button.addEventListener("click", e => {
                     e.target.parentElement.parentElement.remove()
+                    calculateTotals()
                 })
             }
 
