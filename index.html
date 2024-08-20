@@ -242,6 +242,102 @@
         </div>
     </div>
 
+
+    <template id="product-item-template">
+        <td class="text-center item-number align-center">1</td>
+        <td class="table__item-desc w-25">
+            <select style="max-width:250px" class="form-control product-select" data-select="" required=""
+                name="product_id[]" tabindex="-1" aria-hidden="true">
+                <option selected="selected" value="">Select Product or Enter free text</option>
+                <option value="20">Dumpster-10yd-068</option>
+                <option value="23">Dumpster-10yd-271</option>
+                <option value="71">Dumpster-12yd-1724011958-617</option>
+                <option value="17">Dumpster-15yd-192</option>
+                <option value="18">Dumpster-18yd-192</option>
+                <option value="21">Dumpster-20yd-068</option>
+                <option value="19">Dumpster-20yd-192</option>
+                <option value="50">Dumpster-25yd-1711933003-8468</option>
+                <option value="22">Dumpster-30yd-068</option>
+                <option value="35">Dumpster-30yd-1711370877-8844</option>
+                <option value="62">Dumpster-30yd-1716183798-4166</option>
+                <option value="63">Dumpster-30yd-1716184502-4857</option>
+                <option value="24">Dumpster-30yd-271</option>
+                <option value="69">Dumpster-3yd-1723665505-7884</option>
+                <option value="73">Dumpster-3yd-1724012350-9296</option>
+                <option value="70">Temporary Toilets-Flushable Toilet with Sink-1723997770-2729
+                </option>
+                <option value="72">Temporary Toilets-Flushable Toilet with Sink-1724012309-2885
+                </option>
+                <option value="66">testing 3 34</option>
+            </select>
+        </td>
+        <td class="table__qty">
+            <input class="form-control qty form-control-solid" required="" type="number" min="0" step=".01"
+                oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                name="quantity[]">
+        </td>
+        <td>
+            <input class="form-control price-input price form-control-solid"
+                oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required=""
+                onkeypress="if (!window.__cfRLUnblockHandlers) return false; if(this.value.length==8) return false;"
+                name="price[]" type="number">
+        </td>
+        <td>
+            <select style="width:180px" data-select="" name="tax[]" class="form-control tax-select" tabindex="-1"
+                aria-hidden="true">
+                <option value="0">Select Tax</option>
+                <option value="8.63" data-id="1">New York state sales tax</option>
+                <option value="7" data-id="2">Elkhardt Indiana Tax</option>
+                <option value="9.95" data-id="4">Guymon, OK</option>
+                <option value="9.75" data-id="5">Junction City. KS</option>
+                <option value="8.25" data-id="6">Hitchcock, TX</option>
+                <option value="7" data-id="9">Miami</option>
+                <option value="10.83" data-id="10">Magnolia, AR</option>
+                <option value="8.25" data-id="12">Mckinney, TX</option>
+                <option value="8.25" data-id="13">Grand Prairie, TX</option>
+                <option value="6.35" data-id="14">Groton, CT</option>
+                <option value="7" data-id="16">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="17">Elkhardt Indiana Tax</option>
+                <option value="9.75" data-id="18">Junction City. KS</option>
+                <option value="7" data-id="19">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="20">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="21">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="22">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="23">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="24">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="25">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="26">Elkhardt Indiana Tax</option>
+                <option value="7" data-id="27">Elkhardt Indiana Tax</option>
+                <option value="10.83" data-id="28">Magnolia, AR</option>
+                <option value="10.83" data-id="29">Magnolia, AR</option>
+                <option value="11.25" data-id="30">Hays, KS</option>
+                <option value="10.25" data-id="31">Chicago, IL</option>
+                <option value="8.25" data-id="32">Grand Prairie, TX</option>
+            </select>
+        </td>
+        <td class="text-end item-total pt-8 text-nowrap">
+            <span>$</span>
+            0.00
+        </td>
+        <td>
+            <input class="form-control job_number-input form-control-solid"
+                oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="job_number[]" type="number">
+        </td>
+        <td>
+            <input class="form-control po_number  form-control-solid"
+                oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
+                min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="po_number[]" type="number">
+        </td>
+        <td class="text-end">
+            <button type="button" title="Delete"
+                class="btn btn-icon fs-3 text-danger btn-active-color-danger delete-item-new">
+                <i style="pointer-events:none" class="fa-solid fa-trash"></i>
+            </button>
+        </td>
+    </template>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
@@ -263,108 +359,11 @@
                 }
             });
 
-            let templateString = `
-                            <td class="text-center item-number align-center">1</td>
-                            <td  class="table__item-desc w-25">
-                                <select style="max-width:250px" class="form-control product-select" data-select="" required="" name="product_id[]" tabindex="-1"
-                                    aria-hidden="true">
-                                    <option selected="selected" value="">Select Product or Enter free text</option>
-                                    <option value="20">Dumpster-10yd-068</option>
-                                    <option value="23">Dumpster-10yd-271</option>
-                                    <option value="71">Dumpster-12yd-1724011958-617</option>
-                                    <option value="17">Dumpster-15yd-192</option>
-                                    <option value="18">Dumpster-18yd-192</option>
-                                    <option value="21">Dumpster-20yd-068</option>
-                                    <option value="19">Dumpster-20yd-192</option>
-                                    <option value="50">Dumpster-25yd-1711933003-8468</option>
-                                    <option value="22">Dumpster-30yd-068</option>
-                                    <option value="35">Dumpster-30yd-1711370877-8844</option>
-                                    <option value="62">Dumpster-30yd-1716183798-4166</option>
-                                    <option value="63">Dumpster-30yd-1716184502-4857</option>
-                                    <option value="24">Dumpster-30yd-271</option>
-                                    <option value="69">Dumpster-3yd-1723665505-7884</option>
-                                    <option value="73">Dumpster-3yd-1724012350-9296</option>
-                                    <option value="70">Temporary Toilets-Flushable Toilet with Sink-1723997770-2729
-                                    </option>
-                                    <option value="72">Temporary Toilets-Flushable Toilet with Sink-1724012309-2885
-                                    </option>
-                                    <option value="66">testing 3 34</option>
-                                </select>
-                            </td>
-                            <td class="table__qty">
-                                <input class="form-control qty form-control-solid" required="" type="number" min="0"
-                                    step=".01"
-                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
-                                    name="quantity[]">
-                            </td>
-                            <td>
-                                <input class="form-control price-input price form-control-solid"
-                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
-                                    min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required=""
-                                    onkeypress="if (!window.__cfRLUnblockHandlers) return false; if(this.value.length==8) return false;"
-                                    name="price[]" type="number">
-                            </td>
-                            <td>
-                                <select style="width:180px" data-select=""  name="tax[]"
-                                    class="form-control tax-select"
-                                    tabindex="-1" aria-hidden="true">
-                                    <option value="0">Select Tax</option>
-                                    <option value="8.63" data-id="1">New York state sales tax</option>
-                                    <option value="7" data-id="2">Elkhardt Indiana Tax</option>
-                                    <option value="9.95" data-id="4">Guymon, OK</option>
-                                    <option value="9.75" data-id="5">Junction City. KS</option>
-                                    <option value="8.25" data-id="6">Hitchcock, TX</option>
-                                    <option value="7" data-id="9">Miami</option>
-                                    <option value="10.83" data-id="10">Magnolia, AR</option>
-                                    <option value="8.25" data-id="12">Mckinney, TX</option>
-                                    <option value="8.25" data-id="13">Grand Prairie, TX</option>
-                                    <option value="6.35" data-id="14">Groton, CT</option>
-                                    <option value="7" data-id="16">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="17">Elkhardt Indiana Tax</option>
-                                    <option value="9.75" data-id="18">Junction City. KS</option>
-                                    <option value="7" data-id="19">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="20">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="21">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="22">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="23">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="24">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="25">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="26">Elkhardt Indiana Tax</option>
-                                    <option value="7" data-id="27">Elkhardt Indiana Tax</option>
-                                    <option value="10.83" data-id="28">Magnolia, AR</option>
-                                    <option value="10.83" data-id="29">Magnolia, AR</option>
-                                    <option value="11.25" data-id="30">Hays, KS</option>
-                                    <option value="10.25" data-id="31">Chicago, IL</option>
-                                    <option value="8.25" data-id="32">Grand Prairie, TX</option>
-                                </select>
-                            </td>
-                            <td class="text-end item-total pt-8 text-nowrap">
-                                <span>$</span>
-                                0.00
-                            </td>
-                            <td>
-                                <input class="form-control job_number-input form-control-solid"
-                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
-                                    min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="job_number[]"
-                                    type="number">
-                            </td>
-                            <td>
-                                <input class="form-control po_number  form-control-solid"
-                                    oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
-                                    min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="po_number[]"
-                                    type="number">
-                            </td>
-                            <td class="text-end">
-                                <button type="button" title="Delete"
-                                    class="btn btn-icon fs-3 text-danger btn-active-color-danger delete-item-new">
-                                    <i style="pointer-events:none" class="fa-solid fa-trash"></i>
-                                </button>
-                            </td>
-                        `
+            let templateString = document.querySelector("#product-item-template").innerHTML
 
             const itemContainer = document.querySelector(".invoice-item-container");
 
-            addNewTrElement(templateString)                
+            addNewTrElement(templateString)
 
             const deleteBtns = document.querySelectorAll(".delete-item-new")
             deleteBtns.forEach(btn => {
@@ -382,7 +381,7 @@
                 setupDeleteButtonEventListerners(dBtn)
 
                 var productSelect = $(".product-select")[$(".product-select").length - 1]
-                var taxSelect = $(".tax-select")[$(".tax-select").length - 2]
+                var taxSelect = $(".tax-select")[$(".tax-select").length - 1]
 
                 initializeSelect2(productSelect, taxSelect)
                 setupSelectEventListeners(productSelect, taxSelect)
@@ -401,7 +400,6 @@
             }
 
             function setupSelectEventListeners(productSelect, taxSelect) {
-
             }
 
             function setupDeleteButtonEventListerners(button) {
