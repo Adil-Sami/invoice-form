@@ -255,18 +255,18 @@
                 $("#recurring_cycle_wrapper").toggle(this.checked);
             });
 
-            $("select[name='discount_type']").change(function() {
+            $("select[name='discount_type']").change(function () {
                 if ($(this).val() == 1 || $(this).val() == 2) {
-                    $("#discount").prop("disabled", false); 
-                }else{
-                    $("#discount").prop("disabled", true); 
+                    $("#discount").prop("disabled", false);
+                } else {
+                    $("#discount").prop("disabled", true);
                 }
             });
 
             let templateString = `
                             <td class="text-center item-number align-center">1</td>
                             <td  class="table__item-desc w-25">
-                                <select style="max-width:250px" class="form-control" data-select="" required="" name="product_id[]" tabindex="-1"
+                                <select style="max-width:250px" class="form-control product-select" data-select="" required="" name="product_id[]" tabindex="-1"
                                     aria-hidden="true">
                                     <option selected="selected" value="">Select Product or Enter free text</option>
                                     <option value="20">Dumpster-10yd-068</option>
@@ -306,7 +306,7 @@
                             </td>
                             <td>
                                 <select style="width:180px" data-select=""  name="tax[]"
-                                    class="form-control"
+                                    class="form-control tax-select"
                                     tabindex="-1" aria-hidden="true">
                                     <option value="0">Select Tax</option>
                                     <option value="8.63" data-id="1">New York state sales tax</option>
@@ -361,40 +361,54 @@
                                 </button>
                             </td>
                         `
-            const taxTr = document.createElement("tr")
-            taxTr.classList.add("tax-tr")
-            taxTr.innerHTML = templateString
+
             const itemContainer = document.querySelector(".invoice-item-container");
-            itemContainer.appendChild(taxTr)
+
+            addNewTrElement(templateString)                
 
             const deleteBtns = document.querySelectorAll(".delete-item-new")
             deleteBtns.forEach(btn => {
-                btn.addEventListener("click", e => {
-                    e.target.parentElement.parentElement.remove()
-                })
+                setupDeleteButtonEventListerners(btn)
             })
 
-            $(".products select[data-select]").select2()
+            initializeSelect2($(".product-select"), $(".tax-select"))
 
             const addNewBtn = document.querySelector("#add-new-item")
             addNewBtn.addEventListener("click", e => {
-                const newEl = document.createElement("tr")
-                newEl.classList.add("tax-tr")
-                newEl.innerHTML = templateString
-                itemContainer.appendChild(newEl)
+                addNewTrElement(templateString)
 
                 const newDeleteBtn = document.querySelectorAll(".delete-item-new")
-                newDeleteBtn[newDeleteBtn.length - 1].addEventListener("click", e => {
-                    e.target.parentElement.parentElement.remove()
-                })
+                const dBtn = newDeleteBtn[newDeleteBtn.length - 1]
+                setupDeleteButtonEventListerners(dBtn)
 
-                var last = $(".products select[data-select]")[$(".products select[data-select]").length - 1]
-                var secondlast = $(".products select[data-select]")[$(".products select[data-select]").length - 2]
-                $(last).select2()
-                $(secondlast).select2()
+                var productSelect = $(".product-select")[$(".product-select").length - 1]
+                var taxSelect = $(".tax-select")[$(".tax-select").length - 2]
 
+                initializeSelect2(productSelect, taxSelect)
+                setupSelectEventListeners(productSelect, taxSelect)
             })
 
+            function addNewTrElement(html) {
+                const newEl = document.createElement("tr")
+                newEl.classList.add("tax-tr")
+                newEl.innerHTML = html
+                itemContainer.appendChild(newEl)
+            }
+
+            function initializeSelect2(productSelect, taxSelect) {
+                $(productSelect).select2()
+                $(taxSelect).select2()
+            }
+
+            function setupSelectEventListeners(productSelect, taxSelect) {
+
+            }
+
+            function setupDeleteButtonEventListerners(button) {
+                button.addEventListener("click", e => {
+                    e.target.parentElement.parentElement.remove()
+                })
+            }
 
         });
     </script>
