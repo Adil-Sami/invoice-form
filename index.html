@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 
 <body>
@@ -264,15 +265,13 @@
                 <option value="24">Dumpster-30yd-271</option>
                 <option value="69">Dumpster-3yd-1723665505-7884</option>
                 <option value="73">Dumpster-3yd-1724012350-9296</option>
-                <option value="70">Temporary Toilets-Flushable Toilet with Sink-1723997770-2729
-                </option>
-                <option value="72">Temporary Toilets-Flushable Toilet with Sink-1724012309-2885
-                </option>
+                <option value="70">Temporary Toilets-Flushable Toilet with Sink-1723997770-2729</option>
+                <option value="72">Temporary Toilets-Flushable Toilet with Sink-1724012309-2885</option>
                 <option value="66">testing 3 34</option>
             </select>
         </td>
         <td class="table__qty">
-            <input class="form-control qty form-control-solid" required="" type="number" min="0" step=".01"
+            <input class="form-control qty form-control-solid" required="" type="number" min="0" step="1"
                 oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
                 name="quantity[]">
         </td>
@@ -280,55 +279,53 @@
             <input class="form-control price-input price form-control-solid"
                 oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
                 min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required=""
-                onkeypress="if (!window.__cfRLUnblockHandlers) return false; if(this.value.length==8) return false;"
-                name="price[]" type="number">
+                onkeypress="if(this.value.length==8) return false;" name="price[]" type="number">
         </td>
         <td>
             <select style="width:180px" data-select="" name="tax[]" class="form-control tax-select" tabindex="-1"
                 aria-hidden="true">
                 <option value="0">Select Tax</option>
-                <option value="8.63" data-id="1">New York state sales tax</option>
-                <option value="7" data-id="2">Elkhardt Indiana Tax</option>
-                <option value="9.95" data-id="4">Guymon, OK</option>
-                <option value="9.75" data-id="5">Junction City. KS</option>
-                <option value="8.25" data-id="6">Hitchcock, TX</option>
-                <option value="7" data-id="9">Miami</option>
-                <option value="10.83" data-id="10">Magnolia, AR</option>
-                <option value="8.25" data-id="12">Mckinney, TX</option>
-                <option value="8.25" data-id="13">Grand Prairie, TX</option>
-                <option value="6.35" data-id="14">Groton, CT</option>
-                <option value="7" data-id="16">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="17">Elkhardt Indiana Tax</option>
-                <option value="9.75" data-id="18">Junction City. KS</option>
-                <option value="7" data-id="19">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="20">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="21">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="22">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="23">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="24">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="25">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="26">Elkhardt Indiana Tax</option>
-                <option value="7" data-id="27">Elkhardt Indiana Tax</option>
-                <option value="10.83" data-id="28">Magnolia, AR</option>
-                <option value="10.83" data-id="29">Magnolia, AR</option>
-                <option value="11.25" data-id="30">Hays, KS</option>
-                <option value="10.25" data-id="31">Chicago, IL</option>
-                <option value="8.25" data-id="32">Grand Prairie, TX</option>
+                <option value="8.63" data-taxid="1">New York state sales tax</option>
+                <option value="7" data-taxid="2">Elkhardt Indiana Tax</option>
+                <option value="9.95" data-taxid="4">Guymon, OK</option>
+                <option value="9.75" data-taxid="5">Junction City. KS</option>
+                <option value="8.25" data-taxid="6">Hitchcock, TX</option>
+                <option value="7" data-taxid="9">Miami</option>
+                <option value="10.83" data-taxid="10">Magnolia, AR</option>
+                <option value="8.25" data-taxid="12">Mckinney, TX</option>
+                <option value="8.25" data-taxid="13">Grand Prairie, TX</option>
+                <option value="6.35" data-taxid="14">Groton, CT</option>
+                <option value="7" data-taxid="16">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="17">Elkhardt Indiana Tax</option>
+                <option value="9.75" data-taxid="18">Junction City. KS</option>
+                <option value="7" data-taxid="19">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="20">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="21">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="22">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="23">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="24">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="25">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="26">Elkhardt Indiana Tax</option>
+                <option value="7" data-taxid="27">Elkhardt Indiana Tax</option>
+                <option value="10.83" data-taxid="28">Magnolia, AR</option>
+                <option value="10.83" data-taxid="29">Magnolia, AR</option>
+                <option value="11.25" data-taxid="30">Hays, KS</option>
+                <option value="10.25" data-taxid="31">Chicago, IL</option>
+                <option value="8.25" data-taxid="32">Grand Prairie, TX</option>
             </select>
         </td>
         <td class="text-end item-total pt-8 text-nowrap">
-            <span>$</span>
             0.00
         </td>
         <td>
             <input class="form-control job_number-input form-control-solid"
                 oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
-                min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="job_number[]" type="number">
+                min="0" step="1" pattern="^\d*(\.\d{0,2})?$" required="" name="job_number[]" type="number">
         </td>
         <td>
             <input class="form-control po_number  form-control-solid"
                 oninput="if (!window.__cfRLUnblockHandlers) return false; validity.valid||(value=value.replace(/[e\+\-]/gi,''))"
-                min="0" step=".01" pattern="^\d*(\.\d{0,2})?$" required="" name="po_number[]" type="number">
+                min="0" step="1" pattern="^\d*(\.\d{0,2})?$" required="" name="po_number[]" type="number">
         </td>
         <td class="text-end">
             <button type="button" title="Delete"
@@ -341,9 +338,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <script>
         $(document).ready(function () {
+
+            const currencySymbol = "$"
+            const currencySymbolAfter = false
+
+            flatpickr("#invoice_date")
+            flatpickr("#due_date")
 
             $("select[data-select]").select2()
 
@@ -370,21 +374,12 @@
                 setupDeleteButtonEventListerners(btn)
             })
 
-            initializeSelect2($(".product-select"), $(".tax-select"))
-
             const addNewBtn = document.querySelector("#add-new-item")
             addNewBtn.addEventListener("click", e => {
                 addNewTrElement(templateString)
-
                 const newDeleteBtn = document.querySelectorAll(".delete-item-new")
                 const dBtn = newDeleteBtn[newDeleteBtn.length - 1]
                 setupDeleteButtonEventListerners(dBtn)
-
-                var productSelect = $(".product-select")[$(".product-select").length - 1]
-                var taxSelect = $(".tax-select")[$(".tax-select").length - 1]
-
-                initializeSelect2(productSelect, taxSelect)
-                setupSelectEventListeners(productSelect, taxSelect)
             })
 
             function addNewTrElement(html) {
@@ -392,14 +387,67 @@
                 newEl.classList.add("tax-tr")
                 newEl.innerHTML = html
                 itemContainer.appendChild(newEl)
-            }
 
-            function initializeSelect2(productSelect, taxSelect) {
+                let qtyInput = $("input.qty")[$("input.qty").length - 1]
+                $(qtyInput).on("input", handleQtyInput)
+
+                let priceInp = $("input.price-input")[$("input.price-input").length - 1]
+                $(priceInp).on("input", handlePriceInput)
+
+                var productSelect = $(".product-select")[$(".product-select").length - 1]
+                var taxSelect = $(".tax-select")[$(".tax-select").length - 1]
                 $(productSelect).select2()
                 $(taxSelect).select2()
+                $(productSelect).change(handleProductChange)
+                $(taxSelect).change(handleItemTaxChange)
             }
 
-            function setupSelectEventListeners(productSelect, taxSelect) {
+            function handleProductChange() {
+                let item = $(this).parent().parent()
+                item.find('.qty').val(1)
+                item.find('.price-input').val(0)
+            }
+
+            function handleQtyInput() {
+                let item = $(this).parent().parent()
+                let price = Number(item.find('.price-input').val())
+                let quantity = $(this).val()
+                let amount = (quantity * price).toFixed(2)
+                setItemAmount(item, amount)
+            }
+
+            function handlePriceInput() {
+                let item = $(this).parent().parent()
+                let price = Number($(this).val())
+                let quantity = Number(item.find('.qty').val())
+                let amount = (quantity * price).toFixed(2)
+                setItemAmount(item, amount)
+            }
+
+            function setItemAmount(item, amount) {
+                if (currencySymbolAfter) {
+                    amount = `${amount}${currencySymbol}`
+                } else {
+                    amount = `${currencySymbol}${amount}`
+                }
+
+                item.find('.item-total').text(amount)
+            }
+
+            function handleItemTaxChange() {
+                let item = $(this).parent().parent()
+                let taxPercent = Number($(this).val())
+                let taxId = $(this).find("option:selected").data('taxid')
+                let quantity = Number(item.find('.qty').val())
+                let price = Number(item.find('.price-input').val())
+
+                let amount = quantity * price
+                let itemTax = amount * (taxPercent / 100)
+                console.log(itemTax)
+            }
+
+            function calculateTotals() {
+
             }
 
             function setupDeleteButtonEventListerners(button) {
